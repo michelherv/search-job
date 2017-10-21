@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { JobService } from './services/job-service';
 import { Job } from './objects/job';
+import { Page } from './objects/page';
 
 
 @Component({
@@ -9,12 +10,14 @@ import { Job } from './objects/job';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  job: Job;
+  jobs: Job[] = [];
 
   constructor(
     public jobService: JobService
   ) {
-    jobService.get('tele-enqueteur-tele-enquetrice-11').subscribe(response => this.job = response);
+    jobService.findBy({
+      _page: 2,
+    }).subscribe(response => this.jobs.push(...response.items));
   }
 
   doSelect = (job: Job) => {
@@ -31,5 +34,9 @@ export class AppComponent {
 
   doSelectCompany = (job: Job) => {
     console.log('Selected company', job.company);
+  }
+
+  doReachToBottom = () => {
+    console.log('Reached to bottom...');
   }
 }

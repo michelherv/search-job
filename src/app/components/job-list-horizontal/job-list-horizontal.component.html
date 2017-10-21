@@ -1,0 +1,11 @@
+<widget-job
+  *ngFor="let job of jobs"
+  thumbnail="true"
+  horizontal="true"
+  [job]="job"
+  (onSelect)="onSelect.emit($event)"
+  (onSave)="onSave.emit($event)"
+  (onViewCompany)="onViewCompany.emit($event)"
+  (onSelectCompany)="onSelectCompany.emit($event)"
+>
+</widget-job>

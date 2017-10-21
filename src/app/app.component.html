@@ -1,17 +1,18 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-offset-2 col-xs-8">
-      <widget-job
-        *ngIf="job"
+      <widget-job-list
+        *ngIf="jobs && jobs.length"
         thumbnail="true"
         horizontal="true"
-        [job]="job"
-        (onSelect)="doSelect(job)"
-        (onSave)="doSave(job)"
-        (onViewCompany)="doViewCompany(job)"
-        (onSelectCompany)="doSelectCompany(job)"
+        [jobs]="jobs"
+        (onSelect)="doSelect($event)"
+        (onSave)="doSave($event)"
+        (onViewCompany)="doViewCompany($event)"
+        (onSelectCompany)="doSelectCompany($event)"
+        (onReachToBottom)="doReachToBottom()"
       >
-      </widget-job>
+      </widget-job-list>
     </div>
   </div>
 </div>
