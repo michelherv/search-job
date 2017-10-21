@@ -7,17 +7,22 @@ import { Page } from './objects/page';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.less']
 })
 export class AppComponent {
   jobs: Job[] = [];
+  currentPage: Page<Job>;
 
   constructor(
     public jobService: JobService
   ) {
     jobService.findBy({
-      _page: 2,
-    }).subscribe(response => this.jobs.push(...response.items));
+      _page: 1,
+    }).subscribe(response => {
+      this.currentPage = response;
+      this.jobs.push(...response.items);
+      console.log('Reached to bottom...', response);
+    });
   }
 
   doSelect = (job: Job) => {
@@ -38,5 +43,11 @@ export class AppComponent {
 
   doReachToBottom = () => {
     console.log('Reached to bottom...');
+    this.jobService.findBy({
+      _page: this.currentPage.next,
+    }).subscribe(response => {
+      this.currentPage = response;
+      this.jobs.push(...response.items);
+    });
   }
 }
