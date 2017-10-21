@@ -1,0 +1,63 @@
+@import "../../../assets/styles/bootstrap/variables.less";
+
+.job {
+  display: flex;
+  align-items: center;
+  border: none;
+  border-bottom: solid thin @gray-lighter;
+  background-color: #fff;
+  padding: 20px 0;
+
+  .job__logo {
+    width: 15%;
+    text-align: center;
+    vertical-align: middle;
+
+    img {
+      min-width: 60px;
+      min-height: 60px;
+    }
+  }
+
+  .job__info {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: right;
+
+    .badge {
+      border-radius: 4px;
+      padding: 4px 6px;
+      font-size: 13px;
+    }
+
+    .btn.btn-link.btn-xs {
+      padding-left: 0;
+      padding-right: 0;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: @text-muted;
+
+      &:hover,
+      a:focus {
+        color: @brand-primary;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .job__description {
+    width: 65%;
+
+    h4 {
+      margin-bottom: 5px;
+
+      a:hover,
+      a:focus {
+        text-decoration: none;
+      }
+    }
+  }
+}

@@ -83,3 +83,10 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/throw';
+
+
+/**
+ * Locale for angular and moment
+ */
+
+import 'moment/locale/fr';

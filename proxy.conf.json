@@ -1,10 +1,23 @@
 {
   "/api": {
-    "logLevel": "debug",
-    "target": "http://localhost:3000",
+    "logLevel": "info",
     "secure": false,
+    "target": "http://localhost:3000",
     "pathRewrite": {
       "^/api": ""
+    }
+  },
+  "/remote-images": {
+    "logLevel": "info",
+    "secure": false,
+    "changeOrigin": true,
+    "target": {
+      "host": "wizbii.com",
+      "protocol": "https:",
+      "port": 443
+    },
+    "pathRewrite": {
+      "^/remote-images": ""
     }
   }
 }
