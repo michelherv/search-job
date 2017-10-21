@@ -1,4 +1,4 @@
-export class Domain {
+export class Country {
   slug: string;
   title: string;
 

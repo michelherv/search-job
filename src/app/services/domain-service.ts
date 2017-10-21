@@ -1,24 +1,24 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Response } from '@angular/http';
-import { Contract } from '../objects/contract';
+import { Domain } from '../objects/domain';
 
 
 @Injectable()
-export class JobService {
-  private static URL = '/api/contracts';
+export class DomainService {
+  private static URL = '/api/domains';
 
   constructor(
     private http: Http,
   ) { }
 
-  findBy = (filter: object): Observable<Contract[]> => {
+  findBy = (filter: object): Observable<Domain[]> => {
     const query = Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
 
     return this.http
-      .get(JobService.URL, new RequestOptions({ search: query }))
+      .get(DomainService.URL, new RequestOptions({ search: query }))
       .map(response => response.json())
-      .map(response => response.map(item => new Contract(item)))
+      .map(response => response.map(item => new Domain(item)))
       .catch(error => Observable.throw(error));
   }
 }

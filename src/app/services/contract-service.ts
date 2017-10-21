@@ -1,24 +1,24 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Response } from '@angular/http';
-import { Country } from '../objects/country';
+import { Contract } from '../objects/contract';
 
 
 @Injectable()
-export class JobService {
-  private static URL = '/api/countries';
+export class ContractService {
+  private static URL = '/api/contracts';
 
   constructor(
     private http: Http,
   ) { }
 
-  findBy = (filter: object): Observable<Country[]> => {
+  findBy = (filter: object): Observable<Contract[]> => {
     const query = Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
 
     return this.http
-      .get(JobService.URL, new RequestOptions({ search: query }))
+      .get(ContractService.URL, new RequestOptions({ search: query }))
       .map(response => response.json())
-      .map(response => response.map(item => new Country(item)))
+      .map(response => response.map(item => new Contract(item)))
       .catch(error => Observable.throw(error));
   }
 }
