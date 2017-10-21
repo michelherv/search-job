@@ -5,7 +5,12 @@
         *ngIf="job"
         thumbnail="true"
         horizontal="true"
-        [job]="job">
+        [job]="job"
+        (onSelect)="doSelect(job)"
+        (onSave)="doSave(job)"
+        (onViewCompany)="doViewCompany(job)"
+        (onSelectCompany)="doSelectCompany(job)"
+      >
       </widget-job>
     </div>
   </div>

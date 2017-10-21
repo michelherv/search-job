@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { JobService } from './services/job-service';
@@ -15,8 +14,7 @@ import { JobThumbnailHorizontalComponent } from './components/job-thumbnail-hori
   ],
   imports: [
     BrowserModule,
-    HttpModule,
-    RouterModule.forRoot([], { useHash: true })
+    HttpModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR' },

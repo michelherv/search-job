@@ -1,8 +1,10 @@
 <div class="job">
-  <div class="job__logo">
-    <a [routerLink]="['.', 'companies', job.company.id , 'jobs', job.id]">
+  <div class="logo">
+    <a
+      (click)="onSelect.emit(job)"
+      title="Voir la description complète du job"
+    >
       <img
-        class="job__logo"
         [src]="'/remote-images/company/logo?slug=' + job.company.id + '&size=medium'"
         [srcset]="'/remote-images/company/logo?slug=' + job.company.id + '&size=medium%402x 2x'"
         [alt]="'Logo de ' + job.company.name"
@@ -10,14 +12,26 @@
     </a>
   </div>
 
-  <div class="job__description">
+  <div class="description">
     <h4>
-      <a [routerLink]="['.', 'companies', job.company.id , 'jobs', job.id]">{{ job.title }}</a>
+      <a
+        (click)="onSelect.emit(job)"
+        title="Voir la description complète du job"
+      >
+        {{ job.title }}
+      </a>
     </h4>
 
     <div>
       <span class="text-muted">Par</span>
-      <span>{{ job.company.name }}</span>,
+      <a
+        (mouseover)="onViewCompany.emit(job)"
+        (click)="onSelectCompany.emit(job)"
+        title="Voir la description complète de l'entreprise"
+        class="company"
+      >
+        {{ job.company.name }}<!--
+      --></a>,
       <span class="text-muted">{{ job.location.display_value }}</span>
     </div>
 
@@ -26,7 +40,7 @@
     </div>
   </div>
 
-  <div class="job__info">
+  <div class="info">
     <div>
       <span [className]="'badge badge--' + job.contract.slug">{{ job.contract.title_short }}</span>
     </div>
@@ -34,7 +48,8 @@
     <a>
       <a
         class="btn btn-link btn-xs"
-        [routerLink]="['.', 'companies', job.company.id , 'jobs', job.id, 'save']">
+        (click)="onSave.emit(job)"
+      >
         <span class="glyphicon glyphicon-star"></span>
         <span>{{ job.bookmarked ? 'Sauvegardée' : 'Sauvegarder' }}</span>
       </a>
