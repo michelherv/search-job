@@ -1,62 +1,60 @@
-<div class="job">
-  <div class="logo">
+<div class="logo">
+  <a
+    (click)="onSelect.emit(job)"
+    title="Voir la description complète du job"
+  >
+    <img
+      [src]="'/remote-images/company/logo?slug=' + job.company.id + '&size=medium'"
+      [srcset]="'/remote-images/company/logo?slug=' + job.company.id + '&size=medium%402x 2x'"
+      [alt]="'Logo de ' + job.company.name"
+    >
+  </a>
+</div>
+
+<div class="description">
+  <h4>
     <a
       (click)="onSelect.emit(job)"
       title="Voir la description complète du job"
     >
-      <img
-        [src]="'/remote-images/company/logo?slug=' + job.company.id + '&size=medium'"
-        [srcset]="'/remote-images/company/logo?slug=' + job.company.id + '&size=medium%402x 2x'"
-        [alt]="'Logo de ' + job.company.name"
-      >
+      {{ job.title }}
     </a>
-  </div>
+  </h4>
 
-  <div class="description">
-    <h4>
-      <a
-        (click)="onSelect.emit(job)"
-        title="Voir la description complète du job"
-      >
-        {{ job.title }}
-      </a>
-    </h4>
-
-    <div>
-      <span class="text-muted">Par</span>
-      <a
-        (mouseover)="onViewCompany.emit(job)"
-        (click)="onSelectCompany.emit(job)"
-        title="Voir la description complète de l'entreprise"
-        class="company"
-      >
-        {{ job.company.name }}<!--
+  <div>
+    <span class="text-muted">Par</span>
+    <a
+      (mouseover)="onViewCompany.emit(job)"
+      (click)="onSelectCompany.emit(job)"
+      title="Voir la description complète de l'entreprise"
+      class="company"
+    >
+      {{ job.company.name }}<!--
       --></a>,
-      <span class="text-muted">{{ job.location.display_value }}</span>
-    </div>
-
-    <div class="text-muted">
-      {{ job.start_date && moment(job.start_date).isAfter(moment()) ? ('Débute ' + moment(job.start_date).fromNow()) : '' }}
-    </div>
+    <span class="text-muted">{{ job.location.display_value }}</span>
   </div>
 
-  <div class="info">
-    <div>
-      <span [className]="'badge badge--' + job.contract.slug">{{ job.contract.title_short }}</span>
-    </div>
+  <div class="text-muted">
+    {{ job.start_date && moment(job.start_date).isAfter(moment()) ? ('Débute ' + moment(job.start_date).fromNow()) : '' }}
+  </div>
+</div>
 
-    <a>
-      <a
-        class="btn btn-link btn-xs"
-        (click)="onSave.emit(job)"
-      >
-        <span class="glyphicon glyphicon-star"></span>
-        <span>{{ job.bookmarked ? 'Sauvegardée' : 'Sauvegarder' }}</span>
-      </a>
+<div class="info">
+  <div>
+    <span [className]="'badge badge--' + job.contract.slug">{{ job.contract.title_short }}</span>
+  </div>
+
+  <a>
+    <a
+      class="btn btn-link btn-xs"
+      (click)="onSave.emit(job)"
+    >
+      <span class="glyphicon glyphicon-star"></span>
+      <span>{{ job.bookmarked ? 'Sauvegardée' : 'Sauvegarder' }}</span>
     </a>
+  </a>
 
-    <div class="text-muted">
-      {{ moment(job.date_created).fromNow() }}
-    </div>
+  <div class="text-muted">
+    {{ moment(job.date_created).fromNow() }}
   </div>
 </div>
