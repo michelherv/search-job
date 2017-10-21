@@ -16,7 +16,7 @@ export class Page<T> {
 
     for(const link of data.links) {
       const parts = link.split('; ');
-      const value = +parts[0].split('?')[1].split('&')[0].split('=')[1];
+      const value = +parts[0].split('?')[1].split('&')[0].split('=')[1].replace('>', '');
       const field = parts[1].split('"')[1];
       this[field] = value;
     }
