@@ -11,7 +11,7 @@
         class="form-control"
         placeholder="Taper un mot-clé"
         [(ngModel)]="filter.keywords"
-        (ngModelChange)="filterChange.emit(filter)"
+        (ngModelChange)="doFilterChange(filter)"
       >
     </div>
   </div>
@@ -27,13 +27,14 @@
         class="form-control"
         placeholder="Taper une ville"
         [(ngModel)]="filter.location"
-        (ngModelChange)="filterChange.emit(filter)"
+        (ngModelChange)="doFilterChange(filter)"
       >
     </div>
   </div>
 </div>
 
 
+<!-- liste des critères activable -->
 <div class="row">
   <div class="col-xs-4">
     <div class="card-filter-group">
@@ -50,7 +51,7 @@
               <input
                 type="checkbox"
                 [(ngModel)]="contract.enabled"
-                (ngModelChange)="filterChange.emit(filter)"
+                (ngModelChange)="doFilterChange(filter)"
               > {{ contract.title }}
             </label>
           </li>
@@ -69,7 +70,7 @@
               <input
                 type="checkbox"
                 [(ngModel)]="domain.enabled"
-                (ngModelChange)="filterChange.emit(filter)"
+                (ngModelChange)="doFilterChange(filter)"
               > {{ domain.title }}
             </label>
           </li>
@@ -88,7 +89,7 @@
               <input
                 type="checkbox"
                 [(ngModel)]="country.enabled"
-                (ngModelChange)="filterChange.emit(filter)"
+                (ngModelChange)="doFilterChange(filter)"
               > {{ country.title }}
             </label>
           </li>
@@ -107,25 +108,29 @@
               <input
                 type="checkbox"
                 [(ngModel)]="company.enabled"
-                (ngModelChange)="filterChange.emit(filter)"
+                (ngModelChange)="doFilterChange(filter)"
               > {{ company.name }}
             </label>
           </li>
         </ul>
       </div>
-
-
     </div>
   </div>
+
+
+  <!-- critères activés et résultats -->
   <div class="col-xs-8">
     <div class="row tags-bar">
+
+      <!-- liste des critères activés -->
       <div class="col-xs-12">
+        <!-- liste des contrats sélectionnés -->
         <ng-template ngFor let-contract [ngForOf]="filter.contracts" [ngForTrackBy]="trackBy">
           <button
             *ngIf="contract.enabled"
             type="button"
             class="btn btn-label"
-            (click)="contract.enabled = false; filterChange.emit(filter)"
+            (click)="contract.enabled = false; doFilterChange(filter)"
           >
             <span class="glyphicon glyphicon-file"></span>
             <span>{{ contract.title }}</span>
@@ -133,12 +138,13 @@
           </button>
         </ng-template>
 
+        <!-- liste des domaines sélectionnés -->
         <ng-template ngFor let-domain [ngForOf]="filter.domains" [ngForTrackBy]="trackBy">
           <button
             *ngIf="domain.enabled"
             type="button"
             class="btn btn-label"
-            (click)="domain.enabled = false; filterChange.emit(filter)"
+            (click)="domain.enabled = false; doFilterChange(filter)"
           >
             <span class="glyphicon glyphicon-briefcase"></span>
             <span>{{ domain.title }}</span>
@@ -146,12 +152,13 @@
           </button>
         </ng-template>
 
+        <!-- liste des pays sélectionnés -->
         <ng-template ngFor let-country [ngForOf]="filter.countries" [ngForTrackBy]="trackBy">
           <button
             *ngIf="country.enabled"
             type="button"
             class="btn btn-label"
-            (click)="country.enabled = false; filterChange.emit(filter)"
+            (click)="country.enabled = false; doFilterChange(filter)"
           >
             <span class="glyphicon glyphicon-globe"></span>
             <span>{{ country.title }}</span>
@@ -159,12 +166,13 @@
           </button>
         </ng-template>
 
+        <!-- liste des compagnies sélectionnées -->
         <ng-template ngFor let-company [ngForOf]="filter.companies" [ngForTrackBy]="trackBy">
           <button
             *ngIf="company.enabled"
             type="button"
             class="btn btn-label"
-            (click)="company.enabled = false; filterChange.emit(filter)"
+            (click)="company.enabled = false; doFilterChange(filter)"
           >
             <span class="glyphicon glyphicon-equalizer"></span>
             <span>{{ company.name }}</span>
@@ -175,9 +183,26 @@
     </div>
 
 
+    <!-- résultats de la recherche -->
     <div class="row">
       <div class="col-xs-12">
-        <ng-content></ng-content>
+        <widget-job-list
+          thumbnail="true"
+          horizontal="true"
+          [jobs]="jobs"
+          (onSelect)="onSelect.emit($event)"
+          (onSave)="onSave.emit($event)"
+          (onViewCompany)="onViewCompany.emit($event)"
+          (onSelectCompany)="onSelectCompany.emit($event)"
+          (onReachToBottom)="doReachToBottom()"
+        ></widget-job-list>
+      </div>
+
+      <div
+        *ngIf="loading"
+        class="col-xs-12 text-center"
+      >
+        <span class="glyphicon glyphicon-repeat spinner"></span>
       </div>
     </div>
   </div>

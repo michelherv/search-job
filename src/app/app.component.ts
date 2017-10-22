@@ -7,7 +7,6 @@ import { DomainService } from './services/domain-service';
 import { JobService } from './services/job-service';
 import { JobFilter } from './objects/job-filter';
 import { Job } from './objects/job';
-import { Subscription } from 'rxjs/Subscription';
 
 
 @Component({
@@ -16,10 +15,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
-  subscription: Subscription;
-  loading: boolean;
-  filter: JobFilter;
-  jobs: Job[] = [];
+  filter: JobFilter = new JobFilter();
 
   constructor(
     public companyService: CompanyService,
@@ -29,79 +25,33 @@ export class AppComponent implements OnInit {
     public jobService: JobService,
   ) {}
 
-  ngOnInit() {
-    Observable.forkJoin(
-      this.companyService.findBy({}),
-      this.contractService.findBy({}),
-      this.countryService.findBy({}),
-      this.domainService.findBy({})
-    ).subscribe((values) => {
-      this.filter = new JobFilter({
-        companies: values[0],
-        contracts: values[1],
-        countries: values[2],
-        domains: values[3]
-      });
+  ngOnInit() {}
 
-      this.loading = true;
-      this.subscription = this.jobService
-        .findBy(this.filter)
-        .subscribe(jobs => {
-          this.jobs = jobs;
-          this.loading = false;
-        });
-    });
+  doFilterChange = (filter: JobFilter) => {
+    console.log('filter changed...');
   }
 
-  doSelect = (job: Job) => {
-    console.log('Selected job', job);
-  }
-
-  doSave = (job: Job) => {
-    console.log('Saved job', job);
-  }
-
-  doViewCompany = (job: Job) => {
-    console.log('Viewed company', job.company);
-  }
-
-  doSelectCompany = (job: Job) => {
-    console.log('Selected company', job.company);
+  doJobListChange = (job: Job) => {
+    console.log('Job list changed...');
   }
 
   doReachToBottom = () => {
     console.log('Reached to bottom...');
-
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-      this.subscription = null;
-    }
-
-    this.filter.page.index++;
-    this.loading = true;
-    this.subscription = this.jobService
-      .findBy(this.filter)
-      .subscribe(jobs => {
-        this.jobs.push(...jobs);
-        this.loading = false;
-      });
   }
 
-  doFilterChange = (filter: JobFilter) => {
-    console.log('filter change', filter);
+  doSelect = (job: Job) => {
+    console.log('Selected job...');
+  }
 
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-      this.subscription = null;
-    }
+  doSave = (job: Job) => {
+    console.log('Saved job...');
+  }
 
-    filter.page.index = 1;
-    this.loading = true;
-    this.subscription = this.jobService
-      .findBy(filter)
-      .subscribe(jobs => {
-        this.jobs = jobs;
-        this.loading = false;
-      });
+  doViewCompany = (job: Job) => {
+    console.log('Viewed company...');
+  }
+
+  doSelectCompany = (job: Job) => {
+    console.log('Selected company...');
   }
 }

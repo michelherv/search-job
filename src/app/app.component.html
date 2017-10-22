@@ -1,29 +1,17 @@
 <div class="container" *ngIf="filter">
   <widget-job-filter
     [filter]="filter"
+    [jobApi]="jobService.findBy"
+    [companyApi]="companyService.findBy"
+    [contractApi]="contractService.findBy"
+    [countryApi]="countryService.findBy"
+    [domainApi]="domainService.findBy"
     (filterChange)="doFilterChange($event)"
-  >
-    <div class="row">
-      <div class="col-xs-12">
-        <widget-job-list
-          *ngIf="jobs && jobs.length"
-          thumbnail="true"
-          horizontal="true"
-          [jobs]="jobs"
-          (onSelect)="doSelect($event)"
-          (onSave)="doSave($event)"
-          (onViewCompany)="doViewCompany($event)"
-          (onSelectCompany)="doSelectCompany($event)"
-          (onReachToBottom)="doReachToBottom()"
-        ></widget-job-list>
-      </div>
-    </div>
-
-    <div
-      *ngIf="loading"
-      class="col-xs-12 text-center"
-    >
-      <span class="glyphicon glyphicon-repeat spinner"></span>
-    </div>
-  </widget-job-filter>
+    (jobListChange)="doJobListChange($event)"
+    (onReachToBottom)="doReachToBottom()"
+    (onSelect)="doSelect($event)"
+    (onSave)="doSave($event)"
+    (onViewCompany)="doViewCompany($event)"
+    (onSelectCompany)="doSelectCompany($event)"
+  ></widget-job-filter>
 </div>
