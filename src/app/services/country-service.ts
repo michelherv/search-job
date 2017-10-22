@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Response } from '@angular/http';
+import { Http, RequestOptions } from '@angular/http';
 import { Country } from '../objects/country';
 
 
@@ -10,13 +10,13 @@ export class CountryService {
 
   constructor(
     private http: Http,
-  ) { }
+  ) {}
 
   findBy = (filter: object): Observable<Country[]> => {
     const query = Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
 
     return this.http
-      .get(CountryService.URL, new RequestOptions({ search: query }))
+      .get(CountryService.URL, new RequestOptions({search: query}))
       .map(response => response.json())
       .map(response => response.map(item => new Country(item)))
       .catch(error => Observable.throw(error));

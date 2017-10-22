@@ -40,12 +40,12 @@ export class Job {
     this.applied = !!data.applied;
     this.newed = !!data.newed;
     this.online = !!data.online;
-    this.start_date = data.start_date ? new Date(data.start_date): null;
-    this.date_created = data.date_created ? new Date(data.date_created): null;
-    this.location = data.location ? new City(data.location): null;
-    this.company = data.company ? new Company(data.company): null;
-    this.contract = data.contract ? new Contract(data.contract): null;
-    this.required_degree = data.required_degree ? new Degree(data.required_degree): null;
+    this.start_date = data.start_date ? new Date(data.start_date) : null;
+    this.date_created = data.date_created ? new Date(data.date_created) : null;
+    this.location = data.location ? new City(data.location) : null;
+    this.company = data.company ? new Company(data.company) : null;
+    this.contract = data.contract ? new Contract(data.contract) : null;
+    this.required_degree = data.required_degree ? new Degree(data.required_degree) : null;
   }
 }
 

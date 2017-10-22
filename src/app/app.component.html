@@ -1,24 +1,29 @@
-<div class="container">
-  <div class="row">
-    <div class="col-xs-offset-2 col-xs-8">
-      <widget-job-list
-        *ngIf="jobs && jobs.length"
-        thumbnail="true"
-        horizontal="true"
-        [jobs]="jobs"
-        (onSelect)="doSelect($event)"
-        (onSave)="doSave($event)"
-        (onViewCompany)="doViewCompany($event)"
-        (onSelectCompany)="doSelectCompany($event)"
-        (onReachToBottom)="doReachToBottom()"
-      >
-      </widget-job-list>
+<div class="container" *ngIf="filter">
+  <widget-job-filter
+    [filter]="filter"
+    (filterChange)="doFilterChange($event)"
+  >
+    <div class="row">
+      <div class="col-xs-12">
+        <widget-job-list
+          *ngIf="jobs && jobs.length"
+          thumbnail="true"
+          horizontal="true"
+          [jobs]="jobs"
+          (onSelect)="doSelect($event)"
+          (onSave)="doSave($event)"
+          (onViewCompany)="doViewCompany($event)"
+          (onSelectCompany)="doSelectCompany($event)"
+          (onReachToBottom)="doReachToBottom()"
+        ></widget-job-list>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-xs-12 text-center">
-      <span class="glyphicon glyphicon-refresh spinner"></span>
+    <div
+      *ngIf="loading"
+      class="col-xs-12 text-center"
+    >
+      <span class="glyphicon glyphicon-repeat spinner"></span>
     </div>
-  </div>
+  </widget-job-filter>
 </div>

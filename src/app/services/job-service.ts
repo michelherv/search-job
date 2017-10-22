@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Response } from '@angular/http';
 import { Job } from '../objects/job';
 import { Page } from '../objects/page';
+import { JobFilter } from '../objects/job-filter';
 
 
 @Injectable()
@@ -11,21 +12,13 @@ export class JobService {
 
   constructor(
     private http: Http,
-  ) { }
+  ) {}
 
-  findBy = (filter: object): Observable<Page<Job>> => {
-    const query = Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-
+  findBy = (filter: JobFilter): Observable<Job[]> => {
     return this.http
-      .get(JobService.URL, new RequestOptions({ search: query }))
-      .map(response => {
-        return new Page({
-          ...filter,
-          items: response.json().map(item => new Job(item)),
-          total: +response.headers.get('x-total-count'),
-          links: response.headers.get('link').split(', ')
-        });
-      })
+      .get(JobService.URL, new RequestOptions({ search: filter.toQueryString() }))
+      .map(response => response.json())
+      .map(response => response.map(item => new Job(item)))
       .catch(error => Observable.throw(error));
   }
 

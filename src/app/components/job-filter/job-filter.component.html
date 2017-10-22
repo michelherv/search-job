@@ -1,0 +1,184 @@
+<div class="row search-bar">
+
+  <!-- input des mots clés -->
+  <div class="col-xs-7">
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-search text-primary"></span>
+      </span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Taper un mot-clé"
+        [(ngModel)]="filter.keywords"
+        (ngModelChange)="filterChange.emit(filter)"
+      >
+    </div>
+  </div>
+
+  <!-- input de la villes -->
+  <div class="col-xs-5">
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-map-marker text-primary"></span>
+      </span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Taper une ville"
+        [(ngModel)]="filter.location"
+        (ngModelChange)="filterChange.emit(filter)"
+      >
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-xs-4">
+    <div class="card-filter-group">
+
+      <!-- liste des contrats -->
+      <div class="card">
+        <div class="card-title">
+          <span class="glyphicon glyphicon-file"></span>
+          <span>Contrat</span>
+        </div>
+        <ul class="card-body">
+          <li *ngFor="let contract of filter.contracts" [class.active]="contract.enabled">
+            <label>
+              <input
+                type="checkbox"
+                [(ngModel)]="contract.enabled"
+                (ngModelChange)="filterChange.emit(filter)"
+              > {{ contract.title }}
+            </label>
+          </li>
+        </ul>
+      </div>
+
+      <!-- liste des domaines -->
+      <div class="card">
+        <div class="card-title">
+          <span class="glyphicon glyphicon-briefcase"></span>
+          <span>Domaine</span>
+        </div>
+        <ul class="card-body">
+          <li *ngFor="let domain of filter.domains" [class.active]="domain.enabled">
+            <label>
+              <input
+                type="checkbox"
+                [(ngModel)]="domain.enabled"
+                (ngModelChange)="filterChange.emit(filter)"
+              > {{ domain.title }}
+            </label>
+          </li>
+        </ul>
+      </div>
+
+      <!-- liste des pays -->
+      <div class="card">
+        <div class="card-title">
+          <span class="glyphicon glyphicon-globe"></span>
+          <span>Pays</span>
+        </div>
+        <ul class="card-body">
+          <li *ngFor="let country of filter.countries" [class.active]="country.enabled">
+            <label>
+              <input
+                type="checkbox"
+                [(ngModel)]="country.enabled"
+                (ngModelChange)="filterChange.emit(filter)"
+              > {{ country.title }}
+            </label>
+          </li>
+        </ul>
+      </div>
+
+      <!-- liste des entreprises -->
+      <div class="card">
+        <div class="card-title">
+          <span class="glyphicon glyphicon-equalizer"></span>
+          <span>Entreprises</span>
+        </div>
+        <ul class="card-body">
+          <li *ngFor="let company of filter.companies" [class.active]="company.enabled">
+            <label>
+              <input
+                type="checkbox"
+                [(ngModel)]="company.enabled"
+                (ngModelChange)="filterChange.emit(filter)"
+              > {{ company.name }}
+            </label>
+          </li>
+        </ul>
+      </div>
+
+
+    </div>
+  </div>
+  <div class="col-xs-8">
+    <div class="row tags-bar">
+      <div class="col-xs-12">
+        <ng-template ngFor let-contract [ngForOf]="filter.contracts" [ngForTrackBy]="trackBy">
+          <button
+            *ngIf="contract.enabled"
+            type="button"
+            class="btn btn-label"
+            (click)="contract.enabled = false; filterChange.emit(filter)"
+          >
+            <span class="glyphicon glyphicon-file"></span>
+            <span>{{ contract.title }}</span>
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </ng-template>
+
+        <ng-template ngFor let-domain [ngForOf]="filter.domains" [ngForTrackBy]="trackBy">
+          <button
+            *ngIf="domain.enabled"
+            type="button"
+            class="btn btn-label"
+            (click)="domain.enabled = false; filterChange.emit(filter)"
+          >
+            <span class="glyphicon glyphicon-briefcase"></span>
+            <span>{{ domain.title }}</span>
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </ng-template>
+
+        <ng-template ngFor let-country [ngForOf]="filter.countries" [ngForTrackBy]="trackBy">
+          <button
+            *ngIf="country.enabled"
+            type="button"
+            class="btn btn-label"
+            (click)="country.enabled = false; filterChange.emit(filter)"
+          >
+            <span class="glyphicon glyphicon-globe"></span>
+            <span>{{ country.title }}</span>
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </ng-template>
+
+        <ng-template ngFor let-company [ngForOf]="filter.companies" [ngForTrackBy]="trackBy">
+          <button
+            *ngIf="company.enabled"
+            type="button"
+            class="btn btn-label"
+            (click)="company.enabled = false; filterChange.emit(filter)"
+          >
+            <span class="glyphicon glyphicon-equalizer"></span>
+            <span>{{ company.name }}</span>
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-xs-12">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

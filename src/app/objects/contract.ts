@@ -3,6 +3,7 @@ export class Contract {
   title: string;
   title_short: string;
   computed_title: string;
+  enabled: boolean;
 
   constructor(data?: any) {
     data = data || {};
@@ -10,5 +11,6 @@ export class Contract {
     this.title = data.title || '';
     this.title_short = data.title_short || '';
     this.computed_title = data.computed_title || '';
+    this.enabled = !!data.enabled;
   }
 }

@@ -1,7 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { ContractService } from './services/contract-service';
+import { CompanyService } from './services/company-service';
+import { CountryService } from './services/country-service';
+import { DomainService } from './services/domain-service';
 import { JobService } from './services/job-service';
+import { JobFilter } from './objects/job-filter';
 import { Job } from './objects/job';
-import { Page } from './objects/page';
+import { Subscription } from 'rxjs/Subscription';
 
 
 @Component({
@@ -9,19 +15,41 @@ import { Page } from './objects/page';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  subscription: Subscription;
+  loading: boolean;
+  filter: JobFilter;
   jobs: Job[] = [];
-  currentPage: Page<Job>;
 
   constructor(
-    public jobService: JobService
-  ) {
-    jobService.findBy({
-      _page: 1,
-    }).subscribe(response => {
-      this.currentPage = response;
-      this.jobs.push(...response.items);
-      console.log('Reached to bottom...', response);
+    public companyService: CompanyService,
+    public contractService: ContractService,
+    public countryService: CountryService,
+    public domainService: DomainService,
+    public jobService: JobService,
+  ) {}
+
+  ngOnInit() {
+    Observable.forkJoin(
+      this.companyService.findBy({}),
+      this.contractService.findBy({}),
+      this.countryService.findBy({}),
+      this.domainService.findBy({})
+    ).subscribe((values) => {
+      this.filter = new JobFilter({
+        companies: values[0],
+        contracts: values[1],
+        countries: values[2],
+        domains: values[3]
+      });
+
+      this.loading = true;
+      this.subscription = this.jobService
+        .findBy(this.filter)
+        .subscribe(jobs => {
+          this.jobs = jobs;
+          this.loading = false;
+        });
     });
   }
 
@@ -43,11 +71,37 @@ export class AppComponent {
 
   doReachToBottom = () => {
     console.log('Reached to bottom...');
-    this.jobService.findBy({
-      _page: this.currentPage.next,
-    }).subscribe(response => {
-      this.currentPage = response;
-      this.jobs.push(...response.items);
-    });
+
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
+
+    this.filter.page.index++;
+    this.loading = true;
+    this.subscription = this.jobService
+      .findBy(this.filter)
+      .subscribe(jobs => {
+        this.jobs.push(...jobs);
+        this.loading = false;
+      });
+  }
+
+  doFilterChange = (filter: JobFilter) => {
+    console.log('filter change', filter);
+
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
+
+    filter.page.index = 1;
+    this.loading = true;
+    this.subscription = this.jobService
+      .findBy(filter)
+      .subscribe(jobs => {
+        this.jobs = jobs;
+        this.loading = false;
+      });
   }
 }
