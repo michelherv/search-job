@@ -1,12 +1,12 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions } from '@angular/http';
-import { Job } from '../modules/job-module/job-thumbnail-horizontal/objects/job';
-import { JobFilter } from '../modules/job-module/job-filter/objects/job-filter';
-import { Contract } from '../modules/job-module/job-thumbnail-horizontal/objects/contract';
-import { Domain } from '../modules/job-module/job-thumbnail-horizontal/objects/domain';
-import { Country } from '../modules/job-module/job-thumbnail-horizontal/objects/country';
-import { Company } from '../modules/job-module/job-thumbnail-horizontal/objects/company';
+import { Job } from '../../libs/job-module/job-thumbnail-horizontal/objects/job';
+import { JobFilter } from '../../libs/job-module/job-filter/objects/job-filter';
+import { Contract } from '../../libs/job-module/job-thumbnail-horizontal/objects/contract';
+import { Domain } from '../../libs/job-module/job-thumbnail-horizontal/objects/domain';
+import { Country } from '../../libs/job-module/job-thumbnail-horizontal/objects/country';
+import { Company } from '../../libs/job-module/job-thumbnail-horizontal/objects/company';
 
 
 @Injectable()

@@ -8,7 +8,7 @@ import { ContractService } from './services/contract-service';
 import { CountryService } from './services/country-service';
 import { DomainService } from './services/domain-service';
 import { JobService } from './services/job-service';
-import { JobModule } from './modules/job-module/job.module';
+import { JobModule } from '../libs/job-module/job.module';
 
 
 @NgModule({
