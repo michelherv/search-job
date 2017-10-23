@@ -1,17 +1,3 @@
-<div class="container" *ngIf="filter">
-  <widget-job-filter
-    [filter]="filter"
-    [jobApi]="jobService.findBy"
-    [companyApi]="companyService.findBy"
-    [contractApi]="contractService.findBy"
-    [countryApi]="countryService.findBy"
-    [domainApi]="domainService.findBy"
-    (filterChange)="doFilterChange($event)"
-    (jobListChange)="doJobListChange($event)"
-    (onReachToBottom)="doReachToBottom()"
-    (onSelect)="doSelect($event)"
-    (onSave)="doSave($event)"
-    (onViewCompany)="doViewCompany($event)"
-    (onSelectCompany)="doSelectCompany($event)"
-  ></widget-job-filter>
+<div class="container">
+  <router-outlet></router-outlet>
 </div>

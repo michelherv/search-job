@@ -1,40 +1,31 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { LOCALE_ID, NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
-
-import { AppComponent } from './app.component';
-import { CompanyService } from './services/company-service';
-import { ContractService } from './services/contract-service';
-import { CountryService } from './services/country-service';
-import { DomainService } from './services/domain-service';
-import { JobService } from './services/job-service';
-import { JobModule } from '../libs/job-lib/job.module';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
 import { SearchJobComponent } from './views/jobs/search-job/search-job.component';
 import { ViewJobComponent } from './views/jobs/view-job/view-job.component';
+import { JobResolver } from './resolvers/job.resolver';
+
+
+const routes: Routes = [
+  {
+    path: 'jobs',
+    component: SearchJobComponent
+  }, {
+    path: 'jobs/:id',
+    component: ViewJobComponent,
+    resolve: {
+      job: JobResolver
+    }
+  }, {
+    path: '',
+    redirectTo: 'jobs',
+    pathMatch: 'full'
+  }
+];
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SearchJobComponent,
-    ViewJobComponent,
-  ],
-  imports: [
-    BrowserModule,
-    HttpModule,
-    JobModule,
-  ],
-  providers: [
-    { provide: LOCALE_ID, useValue: 'fr-FR' },
-    CompanyService,
-    ContractService,
-    CountryService,
-    DomainService,
-    JobService,
-  ],
-  bootstrap: [
-    AppComponent
-  ]
+  imports: [ RouterModule.forRoot(routes, { useHash: true }) ],
+  exports: [ RouterModule ]
 })
-export class AppModule { }
+export class AppRoutingModule { }
