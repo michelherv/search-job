@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions } from '@angular/http';
-import { Company } from '../../libs/job-module/job-thumbnail-horizontal/objects/company';
+import { Company } from '../../libs/job-lib/job-thumbnail-horizontal/objects/company';
 
 
 @Injectable()

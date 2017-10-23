@@ -4,8 +4,8 @@ import { CompanyService } from './services/company-service';
 import { CountryService } from './services/country-service';
 import { DomainService } from './services/domain-service';
 import { JobService } from './services/job-service';
-import { JobFilter } from '../libs/job-module/job-filter/objects/job-filter';
-import { Job } from '../libs/job-module/job-thumbnail-horizontal/objects/job';
+import { JobFilter } from '../libs/job-lib/job-filter/objects/job-filter';
+import { Job } from '../libs/job-lib/job-thumbnail-horizontal/objects/job';
 
 
 @Component({
