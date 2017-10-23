@@ -25,25 +25,4 @@ export class JobFilter {
     this.companies = (data.companies || []).map(item => new Company(item));
     this.page = new Page<Job>(data.page);
   }
-
-  toQueryString = (): string => {
-    let queryString = `${this.page.toQueryString()}`;
-
-    queryString = queryString + (this.keywords.trim() ? `&q=${this.keywords}` : '');
-    queryString = queryString + (this.location.trim() ? `&location.city=${this.location}` : '');
-
-    queryString = queryString + '&' + this.transform('contract.slug', this.contracts);
-    queryString = queryString + '&' + this.transform('raw_domain', this.domains);
-    queryString = queryString + '&' + this.transform('location.country_short', this.countries);
-    queryString = queryString + '&' + this.transform('company.slug', this.companies);
-
-    return queryString;
-  }
-
-  private transform = (key: string, items: (Contract | Domain | Country | Company)[]) => {
-    return (items || [])
-      .filter(item => item.enabled)
-      .map(item => `${key}=${item.slug}`)
-      .join('&');
-  }
 }

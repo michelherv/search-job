@@ -9,8 +9,4 @@ export class Page<T> {
     this.index = data._page || 1;
     this.limit = data.limit || 10;
   }
-
-  toQueryString = () => {
-    return `_page=${this.index}&_limit=${this.limit}`;
-  }
 }

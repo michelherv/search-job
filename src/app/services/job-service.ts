@@ -1,8 +1,12 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Response } from '@angular/http';
+import { Http, RequestOptions } from '@angular/http';
 import { Job } from '../modules/job-module/job-thumbnail-horizontal/objects/job';
 import { JobFilter } from '../modules/job-module/job-filter/objects/job-filter';
+import { Contract } from '../modules/job-module/job-thumbnail-horizontal/objects/contract';
+import { Domain } from '../modules/job-module/job-thumbnail-horizontal/objects/domain';
+import { Country } from '../modules/job-module/job-thumbnail-horizontal/objects/country';
+import { Company } from '../modules/job-module/job-thumbnail-horizontal/objects/company';
 
 
 @Injectable()
@@ -15,7 +19,7 @@ export class JobService {
 
   findBy = (filter: JobFilter): Observable<Job[]> => {
     return this.http
-      .get(JobService.URL, new RequestOptions({ search: filter.toQueryString() }))
+      .get(JobService.URL, new RequestOptions({ search: this.toQueryString(filter) }))
       .map(response => response.json())
       .map(response => response.map(item => new Job(item)))
       .catch(error => Observable.throw(error));
@@ -29,24 +33,24 @@ export class JobService {
       .catch(error => Observable.throw(error));
   }
 
-  remove = (id: string): Observable<void> => {
-    return this.http
-      .delete(`${JobService.URL}/${id}`)
-      .catch(error => Observable.throw(error));
+  private toQueryString = (filter: JobFilter): string => {
+    let queryString = `_page=${filter.page.index}&_limit=${filter.page.limit}`;
+
+    queryString = queryString + (filter.keywords.trim() ? `&q=${filter.keywords}` : '');
+    queryString = queryString + (filter.location.trim() ? `&location.city=${filter.location}` : '');
+
+    queryString = queryString + '&' + this.transform('contract.slug', filter.contracts);
+    queryString = queryString + '&' + this.transform('raw_domain', filter.domains);
+    queryString = queryString + '&' + this.transform('location.country_short', filter.countries);
+    queryString = queryString + '&' + this.transform('company.slug', filter.companies);
+
+    return queryString;
   }
 
-  save = (job: Job): Observable<Job> => {
-    let request: Observable<Response>;
-
-    if (job.id) {
-      request = this.http.put(`${JobService.URL}/${job.id}`, job);
-    } else {
-      request = this.http.post(`${JobService.URL}`, job);
-    }
-
-    return request
-      .map(response => response.json())
-      .map(response => new Job(response))
-      .catch(error => Observable.throw(error));
+  private transform = (key: string, items: (Contract | Domain | Country | Company)[]) => {
+    return (items || [])
+      .filter(item => item.enabled)
+      .map(item => `${key}=${item.slug}`)
+      .join('&');
   }
 }
