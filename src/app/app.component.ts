@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { ContractService } from './services/contract-service';
 import { CompanyService } from './services/company-service';
 import { CountryService } from './services/country-service';
@@ -14,7 +15,7 @@ import { Job } from '../libs/job-lib/job-thumbnail-horizontal/objects/job';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
-  filter: JobFilter = new JobFilter();
+  filter: JobFilter;
 
   constructor(
     public companyService: CompanyService,
@@ -24,7 +25,19 @@ export class AppComponent implements OnInit {
     public jobService: JobService,
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    Observable.forkJoin(
+      this.companyService.findBy({}),
+      this.contractService.findBy({}),
+      this.countryService.findBy({}),
+      this.domainService.findBy({})
+    ).subscribe((values) => this.filter = new JobFilter({
+      companies: values[0],
+      contracts: values[1],
+      countries: values[2],
+      domains: values[3],
+    }));
+  }
 
   doFilterChange = (filter: JobFilter) => {
     console.log('filter changed...');

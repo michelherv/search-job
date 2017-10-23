@@ -37,7 +37,7 @@ export class JobListHorizontalComponent implements OnInit {
   ngOnInit() {
   }
 
-  trackBy = (index: number, item: Job) => {
+  trackByFunction = (index: number, item: Job) => {
     return item.id;
   }
 }

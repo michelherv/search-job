@@ -125,7 +125,7 @@
       <!-- liste des critères activés -->
       <div class="col-xs-12">
         <!-- liste des contrats sélectionnés -->
-        <ng-template ngFor let-contract [ngForOf]="filter.contracts" [ngForTrackBy]="trackBy">
+        <ng-template ngFor let-contract [ngForOf]="filter.contracts" [ngForTrackBy]="trackByFunction">
           <button
             *ngIf="contract.enabled"
             type="button"
@@ -139,7 +139,7 @@
         </ng-template>
 
         <!-- liste des domaines sélectionnés -->
-        <ng-template ngFor let-domain [ngForOf]="filter.domains" [ngForTrackBy]="trackBy">
+        <ng-template ngFor let-domain [ngForOf]="filter.domains" [ngForTrackBy]="trackByFunction">
           <button
             *ngIf="domain.enabled"
             type="button"
@@ -153,7 +153,7 @@
         </ng-template>
 
         <!-- liste des pays sélectionnés -->
-        <ng-template ngFor let-country [ngForOf]="filter.countries" [ngForTrackBy]="trackBy">
+        <ng-template ngFor let-country [ngForOf]="filter.countries" [ngForTrackBy]="trackByFunction">
           <button
             *ngIf="country.enabled"
             type="button"
@@ -167,7 +167,7 @@
         </ng-template>
 
         <!-- liste des compagnies sélectionnées -->
-        <ng-template ngFor let-company [ngForOf]="filter.companies" [ngForTrackBy]="trackBy">
+        <ng-template ngFor let-company [ngForOf]="filter.companies" [ngForTrackBy]="trackByFunction">
           <button
             *ngIf="company.enabled"
             type="button"
