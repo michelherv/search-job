@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('search-job App', () => {
+describe('search.ts-job App', () => {
   let page: AppPage;
 
   beforeEach(() => {
