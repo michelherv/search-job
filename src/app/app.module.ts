@@ -14,6 +14,7 @@ import { SearchJobComponent } from './views/jobs/search-job/search-job.component
 import { ViewJobComponent } from './views/jobs/view-job/view-job.component';
 import { AppRoutingModule } from './app-routing.module';
 import { JobResolver } from './resolvers/job.resolver';
+import { FilterResolver } from './resolvers/filter.resolver';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { JobResolver } from './resolvers/job.resolver';
     CountryService,
     DomainService,
     JobService,
-    JobResolver
+    JobResolver,
+    FilterResolver
   ],
   bootstrap: [
     AppComponent

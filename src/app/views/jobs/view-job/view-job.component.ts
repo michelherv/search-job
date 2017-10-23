@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -12,10 +13,15 @@ export class ViewJobComponent implements OnInit {
   job: Job;
 
   constructor(
-    public route: ActivatedRoute
+    public location: Location,
+    public route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => this.job = data.job);
+  }
+
+  doBack = () => {
+    this.location.back();
   }
 }

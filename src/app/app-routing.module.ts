@@ -4,12 +4,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { SearchJobComponent } from './views/jobs/search-job/search-job.component';
 import { ViewJobComponent } from './views/jobs/view-job/view-job.component';
 import { JobResolver } from './resolvers/job.resolver';
+import { FilterResolver } from './resolvers/filter.resolver';
 
 
 const routes: Routes = [
   {
     path: 'jobs',
-    component: SearchJobComponent
+    component: SearchJobComponent,
+    resolve: {
+      filter: FilterResolver
+    }
   }, {
     path: 'jobs/:id',
     component: ViewJobComponent,

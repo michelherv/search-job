@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { JobFilter } from '../../../../libs/job-lib/job-filter/objects/job-filter';
-import { CompanyService } from '../../../services/company-service';
-import { ContractService } from '../../../services/contract-service';
-import { CountryService } from '../../../services/country-service';
-import { DomainService } from '../../../services/domain-service';
 import { JobService } from '../../../services/job-service';
+import { JobFilter } from '../../../../libs/job-lib/job-filter/objects/job-filter';
 import { Job } from '../../../../libs/job-lib/job-thumbnail-horizontal/objects/job';
 
 
@@ -15,21 +11,17 @@ import { Job } from '../../../../libs/job-lib/job-thumbnail-horizontal/objects/j
   styleUrls: ['./search-job.component.less']
 })
 export class SearchJobComponent implements OnInit {
-  filter: JobFilter = new JobFilter();
+  filter: JobFilter;
 
   constructor(
     public router: Router,
     public route: ActivatedRoute,
-    public companyService: CompanyService,
-    public contractService: ContractService,
-    public countryService: CountryService,
-    public domainService: DomainService,
     public jobService: JobService,
   ) { }
 
   ngOnInit() {
+    this.route.data.subscribe(data => this.filter = data.filter);
   }
-
 
   doFilterChange = (filter: JobFilter) => {
     console.log('filter changed...');
