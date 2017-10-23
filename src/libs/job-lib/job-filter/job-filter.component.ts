@@ -15,23 +15,12 @@ import { JobFilter } from './objects/job-filter';
   styleUrls: ['./job-filter.component.less']
 })
 export class JobFilterComponent implements OnInit {
-  @Input()
-  filter: JobFilter;
 
   @Input()
   jobApi: (filter: JobFilter) => Observable<Job[]>;
 
   @Input()
-  companyApi: (filter: object) => Observable<Company[]>;
-
-  @Input()
-  contractApi: (filter: object) => Observable<Contract[]>;
-
-  @Input()
-  countryApi: (filter: object) => Observable<Country[]>;
-
-  @Input()
-  domainApi: (filter: object) => Observable<Domain[]>;
+  filter: JobFilter;
 
   @Output()
   filterChange = new EventEmitter<JobFilter>();
@@ -61,35 +50,20 @@ export class JobFilterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    Observable.forkJoin(
-      this.companyApi({}),
-      this.contractApi({}),
-      this.countryApi({}),
-      this.domainApi({})
-    ).subscribe((values) => {
-      this.filter.companies = values[0];
-      this.filter.contracts = values[1];
-      this.filter.countries = values[2];
-      this.filter.domains = values[3];
-      this.loadJobs();
-    });
+    this.loadJobs();
   }
 
   doFilterChange = (filter: JobFilter) => {
     filter.page.index = 1;
-    this.loadJobs();
     this.filterChange.emit(filter);
+    this.loadJobs();
   }
 
 
   doReachToBottom = () => {
     this.filter.page.index++;
-    this.loadJobs();
     this.onReachToBottom.emit();
-  }
-
-  trackBy = (index: number, item: Contract) => {
-    return item.slug;
+    this.loadJobs();
   }
 
   loadJobs = () => {
@@ -107,5 +81,9 @@ export class JobFilterComponent implements OnInit {
       this.jobListChange.emit(this.jobs);
       this.loading = false;
     });
+  }
+
+  trackByFunction = (index: number, item: Contract | Company | Country | Domain) => {
+    return item.slug;
   }
 }

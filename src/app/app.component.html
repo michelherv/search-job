@@ -2,10 +2,6 @@
   <widget-job-filter
     [filter]="filter"
     [jobApi]="jobService.findBy"
-    [companyApi]="companyService.findBy"
-    [contractApi]="contractService.findBy"
-    [countryApi]="countryService.findBy"
-    [domainApi]="domainService.findBy"
     (filterChange)="doFilterChange($event)"
     (jobListChange)="doJobListChange($event)"
     (onReachToBottom)="doReachToBottom()"
