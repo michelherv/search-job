@@ -1,9 +1,8 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Response } from '@angular/http';
-import { Job } from '../objects/job';
-import { Page } from '../objects/page';
-import { JobFilter } from '../objects/job-filter';
+import { Job } from '../modules/job-module/job-thumbnail-horizontal/objects/job';
+import { JobFilter } from '../modules/job-module/job-filter/objects/job-filter';
 
 
 @Injectable()

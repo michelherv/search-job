@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { Job } from '../../objects/job';
+import { Job } from '../job-thumbnail-horizontal/objects/job';
 
 @Component({
   selector: 'widget-job-list[thumbnail="true"][horizontal="true"]',

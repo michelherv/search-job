@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Job } from '../../objects/job';
+import { Job } from './objects/job';
 import * as moment from 'moment';
 
 @Component({

@@ -1,9 +1,9 @@
-import { Contract } from './contract';
-import { Domain } from './domain';
-import { Country } from './country';
-import { Company } from './company';
+import { Contract } from '../../job-thumbnail-horizontal/objects/contract';
+import { Domain } from '../../job-thumbnail-horizontal/objects/domain';
+import { Country } from '../../job-thumbnail-horizontal/objects/country';
+import { Company } from '../../job-thumbnail-horizontal/objects/company';
 import { Page } from './page';
-import { Job } from './job';
+import { Job } from '../../job-thumbnail-horizontal/objects/job';
 
 
 export class JobFilter {

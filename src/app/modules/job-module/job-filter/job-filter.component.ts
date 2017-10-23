@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { Contract } from '../../objects/contract';
-import { Company } from '../../objects/company';
-import { Country } from '../../objects/country';
-import { Domain } from '../../objects/domain';
-import { Job } from '../../objects/job';
-import { JobFilter } from '../../objects/job-filter';
+import { Contract } from '../job-thumbnail-horizontal/objects/contract';
+import { Company } from '../job-thumbnail-horizontal/objects/company';
+import { Country } from '../job-thumbnail-horizontal/objects/country';
+import { Domain } from '../job-thumbnail-horizontal/objects/domain';
+import { Job } from '../job-thumbnail-horizontal/objects/job';
+import { JobFilter } from './objects/job-filter';
 
 
 @Component({

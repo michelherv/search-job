@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { ContractService } from './services/contract-service';
 import { CompanyService } from './services/company-service';
 import { CountryService } from './services/country-service';
 import { DomainService } from './services/domain-service';
 import { JobService } from './services/job-service';
-import { JobFilter } from './objects/job-filter';
-import { Job } from './objects/job';
+import { JobFilter } from './modules/job-module/job-filter/objects/job-filter';
+import { Job } from './modules/job-module/job-thumbnail-horizontal/objects/job';
 
 
 @Component({

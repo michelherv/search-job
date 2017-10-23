@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions } from '@angular/http';
-import { Country } from '../objects/country';
+import { Country } from '../modules/job-module/job-thumbnail-horizontal/objects/country';
 
 
 @Injectable()
