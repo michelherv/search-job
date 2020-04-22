@@ -12,12 +12,12 @@
     "secure": false,
     "changeOrigin": true,
     "target": {
-      "host": "wizbii.com",
+      "host": "picsum.photos",
       "protocol": "https:",
       "port": 443
     },
     "pathRewrite": {
-      "^/remote-images": ""
+      "^/remote-images": "/seed"
     }
   }
 }

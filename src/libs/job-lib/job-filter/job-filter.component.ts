@@ -73,7 +73,7 @@ export class JobFilterComponent implements OnInit {
 
     this.loading = true;
     this.subscription = this.jobApi(this.filter).subscribe(jobs => {
-      if(this.filter.page.index === 1) {
+      if (this.filter.page.index === 1) {
         this.jobs = jobs;
       } else {
         this.jobs.push(...jobs);

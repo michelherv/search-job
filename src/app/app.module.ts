@@ -1,6 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { CompanyService } from './services/company-service';
@@ -26,7 +26,7 @@ import { FilterResolver } from './resolvers/filter.resolver';
   imports: [
     AppRoutingModule,
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     JobModule,
   ],
   providers: [

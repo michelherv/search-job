@@ -1,6 +1,7 @@
-import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions } from '@angular/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Country } from '../../libs/job-lib/job-thumbnail-horizontal/objects/country';
 
 
@@ -9,16 +10,17 @@ export class CountryService {
   private static URL = '/api/countries';
 
   constructor(
-    private http: Http,
+    private httpClient: HttpClient,
   ) {}
 
   findBy = (filter: object): Observable<Country[]> => {
     const query = Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
 
-    return this.http
-      .get(CountryService.URL, new RequestOptions({search: query}))
-      .map(response => response.json())
-      .map(response => response.map(item => new Country(item)))
-      .catch(error => Observable.throw(error));
+    return this.httpClient
+      .get<object[]>(`${CountryService.URL}?${query}`)
+      .pipe(
+        map(response => response.map(item => new Country(item))),
+        catchError(error => throwError(error))
+      );
   }
 }

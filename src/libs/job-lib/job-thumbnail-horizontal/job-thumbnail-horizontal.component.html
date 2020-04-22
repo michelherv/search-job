@@ -4,8 +4,7 @@
     title="Voir la description complète du job"
   >
     <img
-      [src]="'/remote-images/company/logo?slug=' + job.company.id + '&size=medium'"
-      [srcset]="'/remote-images/company/logo?slug=' + job.company.id + '&size=medium%402x 2x'"
+      [src]="'/remote-images/' + job.company.id + '80/80?blur=2'"
       [alt]="'Logo de ' + job.company.name"
     >
   </a>

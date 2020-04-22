@@ -1,6 +1,7 @@
-import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions } from '@angular/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Job } from '../../libs/job-lib/job-thumbnail-horizontal/objects/job';
 import { JobFilter } from '../../libs/job-lib/job-filter/objects/job-filter';
 import { Contract } from '../../libs/job-lib/job-thumbnail-horizontal/objects/contract';
@@ -14,23 +15,25 @@ export class JobService {
   private static URL = '/api/jobs';
 
   constructor(
-    private http: Http,
+    private httpClient: HttpClient,
   ) {}
 
   findBy = (filter: JobFilter): Observable<Job[]> => {
-    return this.http
-      .get(JobService.URL, new RequestOptions({ search: this.toQueryString(filter) }))
-      .map(response => response.json())
-      .map(response => response.map(item => new Job(item)))
-      .catch(error => Observable.throw(error));
+    return this.httpClient
+      .get<object[]>(`${JobService.URL}?${this.toQueryString(filter)}`)
+      .pipe(
+        map(response => response.map(item => new Job(item))),
+        catchError(error => throwError(error))
+      );
   }
 
   get = (id: string): Observable<Job> => {
-    return this.http
+    return this.httpClient
       .get(`${JobService.URL}/${id}`)
-      .map(response => response.json())
-      .map(response => new Job(response))
-      .catch(error => Observable.throw(error));
+      .pipe(
+        map(response => new Job(response)),
+        catchError(error => throwError(error))
+      );
   }
 
   private toQueryString = (filter: JobFilter): string => {

@@ -1,6 +1,7 @@
 import { Injectable} from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Resolve } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { forkJoin, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CompanyService } from '../services/company-service';
 import { ContractService } from '../services/contract-service';
 import { CountryService } from '../services/country-service';
@@ -18,16 +19,19 @@ export class FilterResolver implements Resolve<JobFilter> {
   ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<JobFilter> {
-    return Observable.forkJoin(
+    return forkJoin([
       this.companyService.findBy({}),
       this.contractService.findBy({}),
       this.countryService.findBy({}),
       this.domainService.findBy({})
-    ).map(values => new JobFilter({
-      companies: values[0],
-      contracts: values[1],
-      countries: values[2],
-      domains: values[3],
-    }));;
+    ]
+    ).pipe(
+      map(values => new JobFilter({
+        companies: values[0],
+        contracts: values[1],
+        countries: values[2],
+        domains: values[3],
+      }))
+    );
   }
 }

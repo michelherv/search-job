@@ -1,6 +1,7 @@
-import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions } from '@angular/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Company } from '../../libs/job-lib/job-thumbnail-horizontal/objects/company';
 
 
@@ -9,16 +10,17 @@ export class CompanyService {
   private static URL = '/api/Companies';
 
   constructor(
-    private http: Http,
+    private httpClient: HttpClient,
   ) {}
 
   findBy = (filter: object): Observable<Company[]> => {
     const query = Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
 
-    return this.http
-      .get(CompanyService.URL, new RequestOptions({search: query}))
-      .map(response => response.json())
-      .map(response => response.map(item => new Company(item)))
-      .catch(error => Observable.throw(error));
+    return this.httpClient
+      .get<object[]>(`${CompanyService.URL}?${query}`)
+      .pipe(
+        map(response => response.map(item => new Company(item))),
+        catchError(error => throwError(error))
+      );
   }
 }
